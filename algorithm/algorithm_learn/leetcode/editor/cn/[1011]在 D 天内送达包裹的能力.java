@@ -69,11 +69,11 @@ class Solution {
     public int shipWithinDays(int[] weights, int days) {
         findMaxSum(weights);
         caculatePreSum(weights);
-        return binarySearch(weights,days,max,sum);
+        return binarySearch(weights, days, max, sum);
     }
 
     void findMaxSum(int[] weights) {
-        for (int i = 1; i < weights.length; i++) {
+        for (int i = 0; i < weights.length; i++) {
             if (weights[i] > max) {
                 max = weights[i];
             }
@@ -101,12 +101,10 @@ class Solution {
             if (sum <= minWeight) {
                 right++;
             } else {
-
                 left = right;
                 segement++;
             }
             if (right == weights.length) {
-
                 segement++;
             }
         }
@@ -114,16 +112,16 @@ class Solution {
     }
 
     int binarySearch(int weights[], int days, int left, int right) {
-        int mid = (left + right) / 2;
-        System.out.println(left+" "+right+" "+mid);
-        int segement = segementSum(weights, mid);
-        if (segement == days) {
-            return mid;
-        } else if (segement < days) {
-            return binarySearch(weights, days, left, mid);
-        } else {
-            return binarySearch(weights, days, mid, right);
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int segement = segementSum(weights, mid);
+            if (segement <= days) {
+                right = mid ;
+            } else {
+                left = mid + 1;
+            }
         }
+        return left;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
